@@ -1,0 +1,130 @@
+print("------- BEM VINDO A NOSSA LOJA MEGA MARKET!-------")
+nome_cliente = str(input("Qual o seu nome?  "))
+
+# 1. NOMES CORRIGIDOS E ORGANIZADOS
+# Os nomes agora são consistentes (singular) para facilitar a busca.
+produtos = {
+    1: "roupa",
+    2: "calcado",
+    3: "perfume",
+    4: "relogio",
+}
+
+# 2. DICIONÁRIOS DE ITENS ORGANIZADOS
+# Coloquei todos os sub-dicionários juntos e removi os "\n" desnecessários.
+roupa_itens = {
+    1: {"nome": "Camisa Social", "preco": 79.90},
+    2: {"nome": "Camiseta Básica", "preco": 49.90},
+    3: {"nome": "Calça Jeans", "preco": 129.90}
+}
+
+calcado_itens = {
+    1: {"nome": "Sapato de Corrida", "preco": 354.90},
+    2: {"nome": "Sapato Social", "preco": 780.90},
+    3: {"nome": "Bota de Couro", "preco": 2494.90}
+}
+
+perfume_itens = {
+    1: {"nome": "Perfume Amadeirado", "preco": 154.90},
+    2: {"nome": "Perfume Cítrico", "preco": 283.90},
+    3: {"nome": "Perfume Floral", "preco": 224.90}
+}
+
+relogio_itens = {
+    1: {"nome": "Relógio Digital", "preco": 219.90},
+    2: {"nome": "Relógio Analógico", "preco": 279.90},
+    3: {"nome": "Smartwatch", "preco": 823.90}
+}
+
+# --- FUNÇÃO PRINCIPAL ---
+def buscar_produto(codigo_do_produto):
+    nome_do_produto = produtos.get(codigo_do_produto)
+    return nome_do_produto
+
+# --- EXECUÇÃO DO PROGRAMA ---
+
+# Mostra o menu de categorias para o usuário
+print("\n--- Nossas Categorias ---")
+for codigo, nome_categoria in produtos.items():
+    # Deixa a primeira letra maiúscula para ficar mais bonito
+    print(f"{codigo}: {nome_categoria.capitalize()}")
+
+escolha_numero = int(input(f"\n{nome_cliente}, digite o número da categoria desejada: "))
+categoria_escolhida = buscar_produto(escolha_numero)
+
+# 3. LÓGICA INTERATIVA CORRIGIDA
+if categoria_escolhida:
+    print(f"\nÓtimo! Você escolheu a categoria: {categoria_escolhida.capitalize()}.")
+    
+    # Variável para guardar o dicionário de itens correto
+    itens_para_mostrar = None
+
+    # Verifica qual categoria foi escolhida para mostrar o menu correto
+    if categoria_escolhida == "roupa":
+        itens_para_mostrar = roupa_itens
+    elif categoria_escolhida == "calcado":
+        itens_para_mostrar = calcado_itens
+    elif categoria_escolhida == "perfume":
+        itens_para_mostrar = perfume_itens
+    elif categoria_escolhida == "relogio":
+        itens_para_mostrar = relogio_itens
+
+    # Mostra os itens da categoria escolhida
+    print(f"\n--- Itens de {categoria_escolhida.capitalize()} ---")
+    for codigo, detalhes in itens_para_mostrar.items():
+        nome_item = detalhes['nome']
+        preco_item = detalhes['preco']
+        print(f"Código: {codigo} | Produto: {nome_item} | Preço: R$ {preco_item:.2f}")
+
+    # Pergunta qual item específico o usuário quer
+    escolha_item_numero = int(input("\nQual item você deseja? Digite o código: "))
+    
+    # Busca o item final
+    item_final_selecionado = itens_para_mostrar.get(escolha_item_numero)
+
+    if item_final_selecionado:
+        nome_final = item_final_selecionado['nome']
+        preco_final = item_final_selecionado['preco']
+        print("-" * 30)
+        print(f"Perfeito, {nome_cliente}! Você adicionou '{nome_final}' ao seu carrinho no valor de R$ {preco_final:.2f}.")
+        print("-" * 30)
+    else:
+        print("Código do item inválido. Por favor, tente novamente.")
+
+else:
+    print("Opção de categoria inválida!")
+
+# 4. LÓGICA INTERATIVA
+if item_final_selecionado:
+    pagar = input("Deseja fazer o pagamento agora? (sim ou nao): ").strip().lower()
+    
+    if pagar == "sim":
+        n_parcelar = input("Deseja parcelar? (sim ou nao): ").strip().lower()
+        outro_produto = input("Deseja escolher outro produto antes do pagamento? (sim ou nao): ").strip().lower()
+        if outro_produto == "sim":
+            print("\n--- Outros produtos ---")
+            for codigo, detalhes in produtos.items():
+                nome_item = detalhes['nome']
+                preco_item = detalhes['preco']
+                print(f"Código: {codigo} | Produto: {nome_item} | Preço: R$ {preco_item:.2f}")
+        
+
+        def parcelas(n_parcelar, preco_final):
+            if n_parcelar == "sim":
+                print("Escolha um numero de 1 a 6 parcelas")
+                qtd_parcelas = int(input("Quantidade de parcelas: "))
+                
+                if 1 <= qtd_parcelas <= 6:
+                    parcela = preco_final / qtd_parcelas
+                    print(f"O valor de cada parcela é de R$ {parcela:.2f} e o valor total é de R$ {preco_final:.2f}")
+                else:
+                    print("Número de parcelas inválido! Escolha entre 1 e 6.")
+            
+            else:
+                print(f"O valor do produto é de R$ {preco_final:.2f}")
+                print("Obrigado por comprar conosco!")
+
+        parcelas(n_parcelar, preco_final)
+    
+    elif pagar == "nao":
+        print("Obrigado, o valor total é de: R$ ", preco_final)
