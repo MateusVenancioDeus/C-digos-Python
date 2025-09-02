@@ -9,7 +9,7 @@ Este repositório contém exercícios e pequenos projetos desenvolvidos em **Pyt
 - `bmi_calculator.py` → Calcula o Índice de Massa Corporal (IMC).  
 - `basic_calculator.py` → Calculadora simples com operações básicas.  
 - `logic_operators.py` → Exemplos de uso dos operadores lógicos `and`, `or`, `not`.  
-
+- `Loja_Virtual` → Exemplos de uso de dicionário e DEF em Python armazenando itens e adicionando valores.
 ---
 
 ## 🚀 Como executar os códigos
